@@ -4,6 +4,8 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 import { db } from "@/lib/firebase";
 import { collection, getDocs } from "firebase/firestore";
+import UploadImage from "../components/UploadImage";
+import ImageGallery from "../components/ImageGallery";
 
 export default function Home() {
   const [posts, setPosts] = useState<any[]>([]);
@@ -50,7 +52,7 @@ export default function Home() {
               and backend development and gaining foundational experience in React and Next.js.
               <br></br>
               <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-                <a href="blog">Go create</a>
+                <a href="#">Go create</a>
               </button>
             </p>
           </div>
