@@ -47,8 +47,7 @@ export default function Home() {
               Create a personal portfolio website with 
               an integrated blog where users can add, edit, and delete posts.
               This is an excellent project for learning the basics of frontend
-              and backend development and gaining foundational experience
-              in React and Next.js.
+              and backend development and gaining foundational experience in React and Next.js.
             </p>
           </div>
         </div>
