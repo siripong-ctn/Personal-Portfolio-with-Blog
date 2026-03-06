@@ -48,6 +48,10 @@ export default function Home() {
               an integrated blog where users can add, edit, and delete posts.
               This is an excellent project for learning the basics of frontend
               and backend development and gaining foundational experience in React and Next.js.
+              <br></br>
+              <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                <a href="blog">Go create</a>
+              </button>
             </p>
           </div>
         </div>

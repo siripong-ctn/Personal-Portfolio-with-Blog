@@ -14,7 +14,7 @@ export default function CreatePost() {
     await addDoc(collection(db, "posts"), {
       title,
       content,
-      author: "Bas",
+      author: "Bass",
       slug: title.toLowerCase().replaceAll(" ", "-"),
       date: new Date()
     });
