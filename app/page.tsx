@@ -52,12 +52,20 @@ export default function Home() {
           {posts.map((post) => (
             <div
               key={post.id}
-              className="bg-zinc-900 border border-zinc-800 rounded-xl p-6 hover:border-zinc-600 transition"
+              className="bg-zinc-900 border border-zinc-800 rounded p-6 hover:border-zinc-600 transition"
             >
 
-              <h2 className="text-xl font-semibold mb-2">
-                {post.title || "Untitled"}
-              </h2>
+              <div className="flex justify-between w-full mb-3">
+                <span className="text-left">
+                  <h2 className="text-xl font-semibold mb-2">
+                    {post.title || "Untitled"}
+                  </h2>
+                </span>
+                <span className="text-right">
+                  <a href="#" className="bg-yellow-500 hover:bg-yellow-700 p-2 text-black text-sm font-bold rounded">Edit</a>
+                  <a href="#" className="bg-red-500 hover:bg-red-700 p-2 text-light text-sm font-bold rounded ml-2">Delete</a>
+                  </span>
+                </div>
 
               {post.image && (
                 <Image
@@ -65,7 +73,7 @@ export default function Home() {
                   alt={post.title || "Post image"}
                   width={1920}
                   height={1080}
-                  className="rounded-lg mb-4 object-cover w-full"
+                  className="rounded mb-4 object-cover w-full"
                 />
               )}
               
