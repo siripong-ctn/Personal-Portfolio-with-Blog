@@ -4,6 +4,9 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 import { db } from "@/lib/firebase";
 import { collection, getDocs } from "firebase/firestore";
+import GoCreateButton from "@/components/GoCreateButton";
+import EditButton from "@/components/EditButton";
+import DeleteButton from "@/components/DeleteButton";
 
 export default function Home() {
   const [posts, setPosts] = useState<any[]>([]);
@@ -40,9 +43,7 @@ export default function Home() {
               This is an excellent project for learning the basics of frontend
               and backend development and gaining foundational experience in React and Next.js.
               <br /><br />
-              <a href="#" className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-                Go create
-              </a>
+              <GoCreateButton />
             </p>
         </div>
 
@@ -62,14 +63,18 @@ export default function Home() {
                   </h2>
                 </span>
                 <span className="text-right">
-                  <a href="#" className="bg-yellow-500 hover:bg-yellow-700 p-2 text-black text-sm font-bold rounded">Edit</a>
-                  <a href="#" className="bg-red-500 hover:bg-red-700 p-2 text-light text-sm font-bold rounded ml-2">Delete</a>
+                    <EditButton id={post.id} />
+                    <DeleteButton id={post.id} />
                   </span>
                 </div>
 
               {post.image && (
                 <Image
-                  src={`/images/${post.image}`}
+                  src={
+                    post.image.startsWith("http")
+                      ? post.image
+                      : `/images/${post.image}`
+                  }
                   alt={post.title || "Post image"}
                   width={1920}
                   height={1080}
