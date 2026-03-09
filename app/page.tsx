@@ -70,15 +70,11 @@ export default function Home() {
 
               {post.image && (
                 <Image
-                  src={
-                    post.image.startsWith("http")
-                      ? post.image
-                      : `/images/${post.image}`
-                  }
+                  src={post.image}
                   alt={post.title || "Post image"}
                   width={1920}
                   height={1080}
-                  className="rounded mb-4 object-cover w-full"
+                  className="rounded mb-4 object-cover w-full h-auto"
                 />
               )}
               

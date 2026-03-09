@@ -4,39 +4,35 @@ import { useEffect, useState } from "react";
 import { db } from "@/lib/firebase";
 import { doc, getDoc, updateDoc } from "firebase/firestore";
 import { useRouter, useParams } from "next/navigation";
-import { storage } from "@/lib/firebase";
-import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 
 export default function EditPost() {
 
-    const router = useRouter();
-    const params = useParams();
+  const router = useRouter();
+  const params = useParams();
+  const id = params.id as string;
 
-    const id = params.id as string;
+  const [title, setTitle] = useState("");
+  const [content, setContent] = useState("");
+  const [image, setImage] = useState("");
+  const [about1, setAbout1] = useState("");
+  const [about2, setAbout2] = useState("");
 
-    const [title,setTitle] = useState("");
-    const [content,setContent] = useState("");
-    const [image,setImage] = useState<File | null>(null);
-    const [currentImage,setCurrentImage] = useState("");
-    const [about1,setAbout1] = useState("");
-    const [about2,setAbout2] = useState("");
+  useEffect(() => {
 
-    useEffect(()=>{
+    if (!id) return;
 
-    if(!id) return;
+    const fetchPost = async () => {
 
-    const fetchPost = async()=>{
-
-      const docRef = doc(db,"posts",id);
+      const docRef = doc(db, "posts", id);
       const docSnap = await getDoc(docRef);
 
-      if(docSnap.exists()){
+      if (docSnap.exists()) {
 
-        const data:any = docSnap.data();
+        const data: any = docSnap.data();
 
         setTitle(data.title || "");
         setContent(data.content || "");
-        setCurrentImage(data.image || "");
+        setImage(data.image || "");
         setAbout1(data.about1 || "");
         setAbout2(data.about2 || "");
 
@@ -46,43 +42,32 @@ export default function EditPost() {
 
     fetchPost();
 
-  },[id]);
+  }, [id]);
 
-    const handleUpdate = async (e:any)=>{
+  const handleUpdate = async (e: any) => {
     e.preventDefault();
 
-    try{
+    try {
 
-        let imageUrl = currentImage;
-
-        if(image){
-
-        const storageRef = ref(storage, `images/${Date.now()}-${image.name}`);
-
-        await uploadBytes(storageRef,image);
-
-        imageUrl = await getDownloadURL(storageRef);
-        }
-
-        await updateDoc(doc(db,"posts",id),{
+      await updateDoc(doc(db, "posts", id), {
         title,
         content,
-        image:imageUrl,
+        image,
         about1,
         about2
-        });
+      });
 
-        router.push("/");
+      router.push("/");
 
-    }catch(err){
-        console.error(err);
+    } catch (err) {
+      console.error(err);
     }
 
-    };
+  };
 
-    return (
+  return (
     <div className="min-h-screen bg-zinc-950 text-white flex justify-center">
-        <main className="w-full max-w-2xl p-10">
+      <main className="w-full max-w-2xl p-10">
 
         <h1 className="text-2xl font-bold mb-6">
           Edit Post Blog
@@ -94,40 +79,38 @@ export default function EditPost() {
             type="text"
             className="w-full p-2 bg-zinc-800 rounded"
             value={title}
-            onChange={(e)=>setTitle(e.target.value)}
+            onChange={(e) => setTitle(e.target.value)}
             placeholder="Title"
           />
 
           <textarea
             className="w-full h-100 p-2 bg-zinc-800 rounded"
             value={content}
-            onChange={(e)=>setContent(e.target.value)}
+            onChange={(e) => setContent(e.target.value)}
             placeholder="Content"
           />
 
-
-            {currentImage && (
+          {image && (
             <img
-                src={
-                currentImage.startsWith("http")
-                    ? currentImage
-                    : `/images/${currentImage}`
-                }
-                className="w-full mb-4 rounded"
+              src={image}
+              className="w-full mb-4 rounded"
+              alt="Preview"
             />
-            )}
-            <input
-            type="file"
-            accept="image/*"
+          )}
+
+          <input
+            type="text"
             className="w-full p-2 bg-zinc-800 rounded"
-            onChange={(e)=>setImage(e.target.files?.[0] || null)}
-            />
+            value={image}
+            onChange={(e) => setImage(e.target.value)}
+            placeholder="Image URL"
+          />
 
           <input
             type="text"
             className="w-full p-2 bg-zinc-800 rounded"
             value={about1}
-            onChange={(e)=>setAbout1(e.target.value)}
+            onChange={(e) => setAbout1(e.target.value)}
             placeholder="Reference link 1"
           />
 
@@ -135,14 +118,14 @@ export default function EditPost() {
             type="text"
             className="w-full p-2 bg-zinc-800 rounded"
             value={about2}
-            onChange={(e)=>setAbout2(e.target.value)}
+            onChange={(e) => setAbout2(e.target.value)}
             placeholder="Reference link 2"
           />
 
           <button
-            className="bg-yellow-500 hover:bg-yellow-700 px-4 py-2 rounded font-bold text-black"
+            className="bg-yellow-500 cursor-pointer hover:bg-yellow-700 px-4 py-2 rounded font-bold text-black"
           >
-            Update Post
+            Edit Post
           </button>
 
         </form>
