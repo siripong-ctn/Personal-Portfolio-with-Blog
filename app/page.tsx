@@ -83,20 +83,18 @@ export default function Home() {
                 <br/>
               </p>
 
-              <p className="mb-2 text-sm">
-                Reference:
-              </p>
+              {post.about1 || post.about2 ? <p className="mb-3 text-sm"> Reference : </p> : null}
 
               <p className="mb-5 text-xs">
-                <a href={post.about1} target="_blank" className="bg-slate-500 hover:bg-green-900 text-white font-bold py-2 px-4 rounded">
+                {post.about1 ? <a href={post.about1} target="_blank" className="bg-slate-500 hover:bg-green-900 text-white font-bold py-2 px-4 rounded">
                   {post.about1}
-                </a>
+                </a> : null}
               </p>
 
               <p className="mb-5 text-xs">
-                <a href={post.about2} target="_blank" className="bg-slate-500 hover:bg-green-900 text-white font-bold py-2 px-4 rounded">
+                {post.about2 ? <a href={post.about2} target="_blank" className="bg-slate-500 hover:bg-green-900 text-white font-bold py-2 px-4 rounded">
                   {post.about2}
-                </a>
+                </a> : null}
               </p>
 
               <p className="text-zinc-400 text-xs">
